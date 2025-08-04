@@ -15,10 +15,16 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-md px-4 py-3">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="text-xl font-bold text-gray-800">Expense Manager</div>
+        <div className="text-xl font-bold text-gray-800">Notes App</div>
         <ul className="flex space-x-6 text-gray-700 font-medium">
           {auth?.token ? (
             <>
+              <li className="hover:text-blue-500 cursor-pointer">
+                <Link to={'/add-note'}>Add</Link>
+              </li>
+              <li className="hover:text-blue-500 cursor-pointer">
+                <Link to={'/note-list'}>List</Link>
+              </li>
               <li className="hover:text-blue-500 cursor-pointer" onClick={handleLogout}>
                 Logout
               </li>

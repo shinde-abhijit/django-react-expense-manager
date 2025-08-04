@@ -5,16 +5,17 @@ import AuthContext from './Context/AuthContext';
 import Navbar from './Components/Navbar'
 import AllRoutes from './AllRoutes/AllRoutes';
 import { Toaster } from 'react-hot-toast'
+import Loader from './Components/Loader';
 
 
 
 const App = () => {
   const { auth, logout } = useContext(AuthContext);
 
-  useEffect(() => {
-    console.log('Token:', auth.token);  // ✅ Explicit token log
-    console.log('User:', auth.user);
-  }, [auth]);
+  // useEffect(() => {
+  //   console.log('Token:', auth.token); 
+  //   console.log('User:', auth.user);
+  // }, [auth]);
 
   return (
     <>

@@ -15,6 +15,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     "accounts",
     "corsheaders",
+    "notes",
     "rest_framework",
     'rest_framework_simplejwt',
     "django.contrib.admin",
