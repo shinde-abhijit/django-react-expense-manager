@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-:root {
+body {
     background-color: #F0F0F0;
     color: "#000";
     font-family: 'Montserrat';

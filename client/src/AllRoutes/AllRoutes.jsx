@@ -8,8 +8,12 @@ import DeleteNote from '../Components/Notes/DeleteNote';
 import UpdateNote from '../Components/Notes/UpdateNote';
 import NoteDetails from '../Components/Notes/NoteDetails';
 import AddNote from '../Components/Notes/AddNote';
-import NotesList from '../Components/Notes/NoteList';
 import PageNotFound from '../Components/PageNotFound';
+import AddTodo from '../Components/Todos/AddTodo';
+import TodoDetails from '../Components/Todos/TodoDetails';
+import UpdateTodo from '../Components/Todos/UpdateNote';
+import DeleteTodo from '../Components/Todos/DeleteTodo';
+import TodoList from '../Components/Todos/TodoList';
 
 const AllRoutes = () => {
   return (
@@ -20,15 +24,10 @@ const AllRoutes = () => {
         </PrivateRoute>
       } />
 
+        {/* Notes Routes */}
       <Route path="/add-note" element={
         <PrivateRoute>
           <AddNote />
-        </PrivateRoute>
-      } />
-
-      <Route path="/note-list" element={
-        <PrivateRoute>
-          <NotesList />
         </PrivateRoute>
       } />
 
@@ -47,6 +46,37 @@ const AllRoutes = () => {
       <Route path="/note-delete/:slug" element={
         <PrivateRoute>
           <DeleteNote />
+        </PrivateRoute>
+      } />
+
+      {/* Todo Routes */}
+      <Route path="/add-todo" element={
+        <PrivateRoute>
+          <AddTodo />
+        </PrivateRoute>
+      } />
+
+      <Route path="/todo-details/:slug" element={
+        <PrivateRoute>
+          <TodoDetails />
+        </PrivateRoute>
+      } />
+
+      <Route path="/todo-list" element={
+        <PrivateRoute>
+          <TodoList />
+        </PrivateRoute>
+      } />
+
+      <Route path="/todo-update/:slug" element={
+        <PrivateRoute>
+          <UpdateTodo />
+        </PrivateRoute>
+      } />
+      
+      <Route path="/todo-delete/:slug" element={
+        <PrivateRoute>
+          <DeleteTodo />
         </PrivateRoute>
       } />
 

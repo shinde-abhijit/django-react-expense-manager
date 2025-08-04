@@ -8,7 +8,6 @@ import { Toaster } from 'react-hot-toast'
 import Loader from './Components/Loader';
 
 
-
 const App = () => {
   const { auth, logout } = useContext(AuthContext);
 

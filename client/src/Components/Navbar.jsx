@@ -22,8 +22,12 @@ const Navbar = () => {
               <li className="hover:text-blue-500 cursor-pointer">
                 <Link to={'/add-note'}>Add</Link>
               </li>
+              <li><Link to={"/"} className="hover:text-blue-500">Notes</Link></li>
               <li className="hover:text-blue-500 cursor-pointer">
-                <Link to={'/note-list'}>List</Link>
+                <Link to={'/add-todo'}>Add</Link>
+              </li>
+              <li className="hover:text-blue-500 cursor-pointer">
+                <Link to={'/todo-list'}>Todos</Link>
               </li>
               <li className="hover:text-blue-500 cursor-pointer" onClick={handleLogout}>
                 Logout
@@ -31,7 +35,6 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <li><Link to={"/"} className="hover:text-blue-500">Home</Link></li>
               <li><Link to={"/user-login"} className="hover:text-blue-500">Login</Link></li>
               <li><Link to={"/user-register"} className="hover:text-blue-500">Register</Link></li>
             </>
