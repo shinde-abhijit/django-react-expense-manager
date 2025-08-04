@@ -10,7 +10,9 @@ SECRET_KEY = "django-insecure-$_328gve8ig5#&!&6kn$1e)_m22iyxau5(q4-ulz_jnj-&7*v*
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['django-react-notes-app-server.onrender.com']
+
+CSRF_TRUSTED_ORIGINS = ['https://django-react-notes-app-server.onrender.com', 'https://django-react-notes-app-client.onrender.com']
 
 INSTALLED_APPS = [
     "accounts",
