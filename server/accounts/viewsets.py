@@ -87,5 +87,14 @@ class ProfileDeleteView(APIView):
 
     def delete(self, request):
         user = request.user
+        password = request.data.get('password')
+
+        if not password:
+            return Response({'error': 'Password is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user = authenticate(username=user.username, password=password)
+        if user is None:
+            return Response({'error': 'Incorrect password.'}, status=status.HTTP_403_FORBIDDEN)
+
         user.delete()
-        return Response({'message': 'User deleted.'}, status=status.HTTP_204_NO_CONTENT)
+        return Response({'message': 'User deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)
