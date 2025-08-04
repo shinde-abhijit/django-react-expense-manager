@@ -1,7 +1,13 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import AuthContext from '../Context/AuthContext';
 
 const Register = () => {
+
+    useEffect(() => {
+      document.title = 'User Register';
+    }, []);
+    
+  
   const { register } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
