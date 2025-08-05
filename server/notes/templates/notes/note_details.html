@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Note Details{% endblock %}
+{% block content %}
+<div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg">
+  <h2 class="text-2xl font-semibold text-center mb-4 text-gray-800">
+    {{ note.title }}
+  </h2>
+
+  <ul class="space-y-2 text-sm text-gray-700">
+    <li><strong>Title:</strong> {{ note.title }}</li>
+    <li><strong>Status:</strong> {{ note.status }}</li>
+    <li><strong>Description:</strong> {{ note.description }}</li>
+  </ul>
+
+  <div class="mt-6 flex justify-center gap-4">
+    <a href="{% url 'update_note' note.pk %}" class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 shadow">
+      Edit
+    </a>
+    <a href="{% url 'delete_note' note.pk %}" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 shadow">
+      Delete
+    </a>
+  </div>
+</div>
+{% endblock %}
