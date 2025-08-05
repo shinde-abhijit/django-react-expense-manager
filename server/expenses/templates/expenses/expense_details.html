@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Expense Details{% endblock title %}
+    
+{% block content %}
+<div class="max-w-3xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
+  <h1 class="text-2xl font-bold mb-4 text-gray-800">Expense Details</h1>
+
+  <div class="space-y-4">
+    <div>
+      <p class="text-sm text-gray-500">Title</p>
+      <p class="text-lg font-medium text-gray-900">{{ expense.title }}</p>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">Amount</p>
+      <p class="text-lg font-medium text-gray-900">₹{{ expense.amount }}</p>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">Category</p>
+      <p class="text-lg font-medium text-gray-900">{{ expense.category }}</p>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">Date</p>
+      <p class="text-lg font-medium text-gray-900">{{ expense.date }}</p>
+    </div>
+
+    {% if expense.receipt %}
+      <div>
+        <p class="text-sm text-gray-500">Receipt</p>
+        <img src="{{ expense.receipt.url }}" alt="Receipt Image" class="max-w-xs border rounded shadow">
+      </div>
+    {% else %}
+      <div>
+        <p class="text-sm text-gray-500">Receipt</p>
+        <p class="text-gray-600 italic">No receipt uploaded.</p>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="mt-6 flex gap-4">
+    <a href="{% url 'expense_update' expense.pk %}" class="text-yellow-600 hover:underline">Edit</a>
+    <a href="{% url 'expense_delete' expense.pk %}" class="text-red-600 hover:underline">Delete</a>
+    <a href="{% url 'expense_list' %}" class="text-blue-600 hover:underline">Back to List</a>
+  </div>
+</div>
+{% endblock %}

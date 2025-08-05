@@ -81,26 +81,28 @@ class Expense(models.Model):
         if not self.is_recurring and self.recurring_interval:
             raise ValidationError({'recurring_interval': "Recurring interval should be empty for non-recurring expenses."})
 
-        if self.receipt:
+        if self.receipt and hasattr(self.receipt, 'file'):
             valid_extensions = ['.jpg', '.jpeg', '.png', '.pdf']
             ext = os.path.splitext(self.receipt.name)[1].lower()
             if ext not in valid_extensions:
                 raise ValidationError({'receipt': "Only .jpg, .jpeg, .png, or .pdf files are allowed for receipts."})
-        
-        if self.receipt.size > 2 * 1024 * 1024:
-            raise ValidationError({'receipt': "Receipt file size must be under 5MB."})
 
-        
+            if self.receipt.size > 5 * 1024 * 1024:  # 5MB
+                raise ValidationError({'receipt': "Receipt file size must be under 5MB."})
+
+
     def save(self, *args, **kwargs):
-        if self.receipt and hasattr(self.receipt, 'file') and self.receipt.name.lower().endswith(('.jpg', '.jpeg', '.png')):
-            image = Image.open(self.receipt)
-            image = image.convert('RGB')
-            image.thumbnail((800, 800))  # Resize
+        if self.receipt and hasattr(self.receipt, 'file'):
+            ext = os.path.splitext(self.receipt.name)[1].lower()
+            if ext in ['.jpg', '.jpeg', '.png']:
+                image = Image.open(self.receipt)
+                image = image.convert('RGB')
+                image.thumbnail((800, 800))  # Resize to max 800x800
 
-            buffer = BytesIO()
-            image.save(fp=buffer, format='JPEG')
-            file_name = os.path.basename(self.receipt.name)
-            self.receipt.save(file_name, ContentFile(buffer.getvalue()), save=False)
+                buffer = BytesIO()
+                image.save(fp=buffer, format='JPEG')
+                file_name = os.path.basename(self.receipt.name)
+                self.receipt.save(file_name, ContentFile(buffer.getvalue()), save=False)
 
         super().save(*args, **kwargs)
 
