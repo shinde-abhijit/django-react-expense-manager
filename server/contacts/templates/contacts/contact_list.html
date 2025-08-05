@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}All Contacts{% endblock %}
+{% block content %}
+<div class="max-w-5xl bg-white p-8 rounded-lg shadow-md mx-auto mt-10">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold">Contact List</h2>
+    <a href="{% url 'add_contact' %}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Add Contact</a>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
+    {% for contact in contacts %}
+      <div class="p-6 rounded shadow scale-95 duration-300 cursor-pointer hover:scale-100">
+        {% if contact.contact_image %}
+        <img src="{{ contact.contact_image.url }}" alt="Image" class="w-20 h-20 object-cover rounded-full mb-2">
+        {% else %}
+        <div class="w-20 h-20 rounded-full bg-gray-300 text-gray-700 flex items-center justify-center text-xl font-bold mb-2">
+            {{ contact.first_name|default:''|first }}{{ contact.last_name|default:''|first }}
+        </div>
+        {% endif %}
+        <h3 class="text-lg font-semibold">{{ contact.first_name }} {{ contact.last_name }}</h3>
+        <p class="text-sm text-gray-600">{{ contact.email }}</p>
+        <div class="mt-2 flex gap-2">
+          <a href="{% url 'contact_details' contact.pk %}" class="text-blue-600 hover:underline">View</a>
+          <a href="{% url 'update_contact' contact.pk %}" class="text-yellow-600 hover:underline">Edit</a>
+          <a href="{% url 'delete_contact' contact.pk %}" class="text-red-600 hover:underline">Delete</a>
+        </div>
+      </div>
+    {% empty %}
+      <p>No contacts found.</p>
+    {% endfor %}
+  </div>
+
+  {% include "components/pagination.html" with page_obj=contacts %}
+</div>
+{% endblock %}

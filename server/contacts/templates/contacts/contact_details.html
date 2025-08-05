@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Contact Details{% endblock %}
+{% block content %}
+<div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg">
+  <div class="flex justify-center mb-4">
+    {% if contact.contact_image %}
+      <img src="{{ contact.contact_image.url }}" class="w-32 h-32 object-cover rounded-full shadow">
+    {% else %}
+      <div class="w-32 h-32 rounded-full bg-gray-300 text-gray-700 flex items-center justify-center text-3xl font-bold shadow">
+        {{ contact.first_name|default:''|first }}{{ contact.last_name|default:''|first }}
+      </div>
+    {% endif %}
+  </div>
+
+  <h2 class="text-2xl font-semibold text-center mb-4 text-gray-800">
+    {{ contact.first_name }} {{ contact.last_name }}
+  </h2>
+
+  <ul class="space-y-2 text-sm text-gray-700">
+    {% if contact.nickname %}<li><strong>Nickname:</strong> {{ contact.nickname }}</li>{% endif %}
+    {% if contact.birth_date %}<li><strong>Birth Date:</strong> {{ contact.birth_date }}</li>{% endif %}
+    {% if contact.contact %}<li><strong>Contact:</strong> {{ contact.contact }}</li>{% endif %}
+    {% if contact.alternate_contact %}<li><strong>Alt Contact:</strong> {{ contact.alternate_contact }}</li>{% endif %}
+    {% if contact.email %}<li><strong>Email:</strong> {{ contact.email }}</li>{% endif %}
+    {% if contact.alternate_email %}<li><strong>Alt Email:</strong> {{ contact.alternate_email }}</li>{% endif %}
+    {% if contact.address or contact.city or contact.state or contact.postal_code or contact.country %}
+      <li>
+        <strong>Address:</strong>
+        {{ contact.address }},
+        {{ contact.city }},
+        {{ contact.state }},
+        {{ contact.postal_code }},
+        {{ contact.country }}
+      </li>
+    {% endif %}
+  </ul>
+
+  <div class="mt-6 flex justify-center gap-4">
+    <a href="{% url 'update_contact' contact.pk %}" class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 shadow">
+      Edit
+    </a>
+    <a href="{% url 'delete_contact' contact.pk %}" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 shadow">
+      Delete
+    </a>
+  </div>
+</div>
+{% endblock %}

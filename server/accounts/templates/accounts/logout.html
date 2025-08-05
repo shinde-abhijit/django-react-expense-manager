@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}User Logout{% endblock title %}
+{% block icons %}
+{% endblock icons %}
+{% block content %}
+<div class="max-w-md mx-auto mt-24 bg-white p-8 rounded-lg shadow-lg text-center">
+  <h2 class="text-2xl font-bold mb-6 uppercase text-center">Confirm Logout</h2>
+  <p class="mb-6">Are you sure you want to log out?</p>
+  <form method="POST" class="space-x-4 inline-block">
+    {% csrf_token %}
+    <button type="submit" class="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700">Logout</button>
+    <a href="{% url 'user_profile' %}" class="px-6 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400">Cancel</a>
+  </form>
+</div>
+{% endblock %}
+

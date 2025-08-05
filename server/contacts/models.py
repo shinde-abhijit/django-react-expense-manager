@@ -87,6 +87,30 @@ class Contact(models.Model):
             if not re.fullmatch(r'\d{10,13}', self.alternate_contact):
                 raise ValidationError({'alternate_contact': "Alternate contact must be between 10 and 13 digits and contain only numbers."})
 
+       # Ensure contact is unique for this user
+        if self.contact:
+            contact_conflict = Contact.objects.filter(
+                user=self.user,
+                contact=self.contact
+            ).exclude(pk=self.pk).exists()
+
+            if contact_conflict:
+                raise ValidationError({'contact': "This contact already exists for this user."})
+
+        # Ensure alternate_contact is unique for this user
+        if self.alternate_contact:
+            alt_contact_conflict = Contact.objects.filter(
+                user=self.user,
+                alternate_contact=self.alternate_contact
+            ).exclude(pk=self.pk).exists()
+
+            if alt_contact_conflict:
+                raise ValidationError({'alternate_contact': "This alternate contact already exists for this user."})
+
+        # Ensure contact is not the same as alternate_contact (for the same instance)
+        if self.contact and self.alternate_contact and self.contact == self.alternate_contact:
+            raise ValidationError("Contact and Alternate Contact must be different.")
+
         # email domain validation
         if self.email:
             allowed_domains = ['gmail.com', 'outlook.com', 'hotmail.com', 'live.com']

@@ -1,0 +1,29 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}{% endblock title %}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% block icons %}
+        <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    {% endblock icons %}
+    {% tailwind_css %}
+</head>
+
+<body>
+    {% block content %}{% endblock content %}
+
+
+<style>
+    body {
+        background-color: #f0f0f0;
+        color: #000;
+        font-size: 13px;
+        font-family: 'Montserrat';
+    }
+</style>
+
+</body>
+</html>
