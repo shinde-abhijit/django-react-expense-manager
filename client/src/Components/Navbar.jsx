@@ -20,6 +20,12 @@ const Navbar = () => {
           {auth?.token ? (
             <>
               <li className="hover:text-blue-500 cursor-pointer">
+                <Link to={'/expense-list'}>Expense</Link>
+              </li>
+              <li className="hover:text-blue-500 cursor-pointer">
+                <Link to={'/add-expense'}>Add</Link>
+              </li>
+              <li className="hover:text-blue-500 cursor-pointer">
                 <Link to={'/add-contact'}>Add</Link>
               </li>
               <li className="hover:text-blue-500 cursor-pointer">

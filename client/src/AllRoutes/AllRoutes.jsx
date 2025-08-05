@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import NotesRoutes from './NotesRoutes';
 import TodoRoutes from './TodoRoutes';
 import ContactRoutes from './ContactRoutes';
+import ExpenseRoutes from './ExpenseRoutes';
 import UserRoutes from './UserRoutes';
 import PrivateRoute from './PrivateRoute';
 
@@ -22,6 +23,7 @@ const AllRoutes = () => {
         {TodoRoutes()}
         {ContactRoutes()}
         {UserRoutes()}
+        {ExpenseRoutes()}
 
         {/* Public Routes */}
         <Route path="/user-login" element={<Login />} />
