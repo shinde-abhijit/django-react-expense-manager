@@ -13,8 +13,10 @@
 </head>
 
 <body>
-    {% block content %}{% endblock content %}
 
+    {% include 'components/navbar.html' %}
+    
+    {% block content %}{% endblock content %}
 
 <style>
     body {

@@ -4,8 +4,7 @@ from .viewsets import ContactViewSet
 from . import views
 
 router = DefaultRouter()
-router.register(r'contacts', ContactViewSet, basename='contact')
-
+router.register(r"contacts", ContactViewSet, basename="contact")
 
 
 urlpatterns = [
@@ -14,6 +13,5 @@ urlpatterns = [
     path("contact-update/<int:pk>/", views.update_contact, name="update_contact"),
     path("contact-delete/<int:pk>/", views.delete_contact, name="delete_contact"),
     path("contact-details/<int:pk>/", views.contact_details, name="contact_details"),
-
-    path('api/', include(router.urls)),
+    path("api/", include(router.urls)),
 ]

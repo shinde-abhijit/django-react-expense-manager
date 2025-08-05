@@ -11,11 +11,11 @@
     {% for contact in contacts %}
       <div class="p-6 rounded shadow scale-95 duration-300 cursor-pointer hover:scale-100">
         {% if contact.contact_image %}
-        <img src="{{ contact.contact_image.url }}" alt="Image" class="w-20 h-20 object-cover rounded-full mb-2">
+          <img src="{% url 'protected_media' contact.contact_image.name %}" alt="Profile Image" class="w-32 h-32 rounded-full object-cover shadow">
         {% else %}
-        <div class="w-20 h-20 rounded-full bg-gray-300 text-gray-700 flex items-center justify-center text-xl font-bold mb-2">
+          <div class="w-32 h-32 rounded-full bg-gray-300 text-gray-700 flex items-center justify-center text-3xl font-bold shadow">
             {{ contact.first_name|default:''|first }}{{ contact.last_name|default:''|first }}
-        </div>
+          </div>
         {% endif %}
         <h3 class="text-lg font-semibold">{{ contact.first_name }} {{ contact.last_name }}</h3>
         <p class="text-sm text-gray-600">{{ contact.email }}</p>

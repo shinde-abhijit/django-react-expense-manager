@@ -1,22 +1,20 @@
 from django.db import models
 from accounts.models import CustomUser
 from django.core.exceptions import ValidationError
-import os
 import re
 from django.utils.text import slugify
 
 
-
 class Todo(models.Model):
     STATUS_CHOICES = [
-        ('pending', 'Pending'),
-        ('completed', 'Completed'),
+        ("pending", "Pending"),
+        ("completed", "Completed"),
     ]
 
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='todos')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="todos")
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="pending")
     due_date = models.DateTimeField(null=True, blank=True)
     slug = models.SlugField(unique=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -28,8 +26,10 @@ class Todo(models.Model):
         self.description = self.description.strip()
 
         # Title cannot be only special characters
-        if not re.match(r'^[A-Za-z0-9\s]+$', self.title):
-            raise ValidationError("Title should contain only letters, numbers, and spaces.")
+        if not re.match(r"^[A-Za-z0-9\s]+$", self.title):
+            raise ValidationError(
+                "Title should contain only letters, numbers, and spaces."
+            )
 
         # Title must be at least 3 characters long
         if len(self.title) < 3:
@@ -41,7 +41,7 @@ class Todo(models.Model):
 
     def __str__(self):
         return self.title
-    
+
     def save(self, *args, **kwargs):
         # Call full_clean() before saving
         self.full_clean()
@@ -51,6 +51,6 @@ class Todo(models.Model):
         super().save(*args, **kwargs)
 
     class Meta:
-        ordering = ['-updated_at']
-        verbose_name = 'Todo'
-        verbose_name_plural = 'Todos'
+        ordering = ["-updated_at"]
+        verbose_name = "Todo"
+        verbose_name_plural = "Todos"

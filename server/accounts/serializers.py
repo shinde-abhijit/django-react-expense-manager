@@ -8,17 +8,17 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = [
-            'id', 
-            'first_name', 
-            'last_name', 
-            'email', 
-            'contact', 
-            'profile_image', 
-            'password'
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+            "contact",
+            "profile_image",
+            "password",
         ]
 
     def create(self, validated_data):
-        password = validated_data.pop('password')
+        password = validated_data.pop("password")
         user = CustomUser(**validated_data)
         user.set_password(password)
         user.save()

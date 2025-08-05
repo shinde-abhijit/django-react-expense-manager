@@ -1,6 +1,9 @@
 from django.contrib.auth.models import (
-    AbstractBaseUser, PermissionsMixin,
-    BaseUserManager, Group, Permission,
+    AbstractBaseUser,
+    PermissionsMixin,
+    BaseUserManager,
+    Group,
+    Permission,
 )
 from django.db import models
 from django.utils import timezone
@@ -10,7 +13,6 @@ from datetime import datetime
 from PIL import Image
 from io import BytesIO
 from django.core.files.base import ContentFile
-from django.core.exceptions import ValidationError
 import re
 
 
@@ -24,9 +26,7 @@ def user_profile_image_path(instance, filename):
 
 
 class CustomUserManager(BaseUserManager):
-    def create_user(
-        self, email, first_name, last_name, password=None, **extra_fields
-    ):
+    def create_user(self, email, first_name, last_name, password=None, **extra_fields):
         if not email:
             raise ValueError("The Email must be set")
         if not first_name:
@@ -54,9 +54,7 @@ class CustomUserManager(BaseUserManager):
             raise ValueError("Superuser must have is_staff=True.")
         if extra_fields.get("is_superuser") is not True:
             raise ValueError("Superuser must have is_superuser=True.")
-        return self.create_user(
-            email, first_name, last_name, password, **extra_fields
-        )
+        return self.create_user(email, first_name, last_name, password, **extra_fields)
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
@@ -64,7 +62,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=30)
     email = models.EmailField(unique=True)
     contact = models.CharField(max_length=15, unique=True, blank=False)
-    profile_image = models.ImageField(upload_to=user_profile_image_path, blank=True, null=True)
+    profile_image = models.ImageField(
+        upload_to=user_profile_image_path, blank=True, null=True
+    )
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
@@ -93,20 +93,28 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         "first_name",
         "last_name",
         "contact",
-    ]  
+    ]
     objects = CustomUserManager()
 
     def clean(self):
         if not self.first_name.isalpha():
-            raise ValidationError({'first_name': 'First name should only contain alphabetic characters.'})
+            raise ValidationError(
+                {"first_name": "First name should only contain alphabetic characters."}
+            )
         if not self.last_name.isalpha():
-            raise ValidationError({'last_name': 'Last name should only contain alphabetic characters.'})
-        allowed_domains = ['gmail.com', 'outlook.com', 'live.com', 'hotmail.com']
-        domain = self.email.split('@')[-1]
+            raise ValidationError(
+                {"last_name": "Last name should only contain alphabetic characters."}
+            )
+        allowed_domains = ["gmail.com", "outlook.com", "live.com", "hotmail.com"]
+        domain = self.email.split("@")[-1]
         if domain not in allowed_domains:
-            raise ValidationError({'email': f'Email domain must be one of: {", ".join(allowed_domains)}.'})
-        if self.contact and not re.match(r'^\d{10,13}$', self.contact):
-            raise ValidationError({'contact': 'Contact number must be between 10 and 13 digits.'})
+            raise ValidationError(
+                {"email": f'Email domain must be one of: {", ".join(allowed_domains)}.'}
+            )
+        if self.contact and not re.match(r"^\d{10,13}$", self.contact):
+            raise ValidationError(
+                {"contact": "Contact number must be between 10 and 13 digits."}
+            )
         super().clean()
 
     def save(self, *args, validate=True, **kwargs):
@@ -127,4 +135,4 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return f"{self.email}, {self.first_name} {self.last_name}"
 
     class Meta:
-        unique_together = (("contact", ),)
+        unique_together = (("contact",),)

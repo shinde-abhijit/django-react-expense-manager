@@ -4,7 +4,7 @@
 <div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg">
   <div class="flex justify-center mb-4">
     {% if contact.contact_image %}
-      <img src="{{ contact.contact_image.url }}" class="w-32 h-32 object-cover rounded-full shadow">
+      <img src="{% url 'protected_media' contact.contact_image.url %}" alt="Profile Image" class="w-32 h-32 rounded-full object-cover shadow">
     {% else %}
       <div class="w-32 h-32 rounded-full bg-gray-300 text-gray-700 flex items-center justify-center text-3xl font-bold shadow">
         {{ contact.first_name|default:''|first }}{{ contact.last_name|default:''|first }}

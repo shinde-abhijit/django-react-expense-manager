@@ -8,20 +8,19 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def add_contact(request):
     if request.method == "POST":
-        form = ContactForm(request.POST, request.FILES, user=request.user)
+        form = ContactForm(request.POST, request.FILES)
+        form.instance.user = request.user  # set before is_valid()
         if form.is_valid():
-            contact = form.save(commit=False)
-            contact.user = request.user
-            contact.save()
+            form.save()
             return redirect("contact_list")
     else:
         form = ContactForm()
-    return render(request, "contacts/add_contact.html", {"form": form})
+    return render(request, "contacts/contact_form.html", {"form": form})
 
 
 @login_required
 def update_contact(request, pk):
-    contact = get_object_or_404(Contact, pk=pk, user=request.user)
+    contact = get_object_or_404(Contact, pk=pk)
     if request.method == "POST":
         form = ContactForm(request.POST, request.FILES, instance=contact)
         if form.is_valid():
@@ -32,7 +31,9 @@ def update_contact(request, pk):
     else:
         form = ContactForm(instance=contact)
 
-    return render(request, "contacts/update_contact.html", {"form": form, "contact": contact})
+    return render(
+        request, "contacts/update_contact.html", {"form": form, "contact": contact}
+    )
 
 
 @login_required
@@ -47,7 +48,7 @@ def delete_contact(request, pk):
 @login_required
 def contact_list(request):
     contact_list = Contact.objects.filter(user=request.user).order_by("first_name")
-    paginator = Paginator(contact_list, 1)  
+    paginator = Paginator(contact_list, 50)
     page_number = request.GET.get("page")
     contacts = paginator.get_page(page_number)
     return render(request, "contacts/contact_list.html", {"contacts": contacts})
@@ -57,4 +58,3 @@ def contact_list(request):
 def contact_details(request, pk):
     contact = get_object_or_404(Contact, pk=pk, user=request.user)
     return render(request, "contacts/contact_details.html", {"contact": contact})
-

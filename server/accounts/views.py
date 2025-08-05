@@ -1,19 +1,21 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import (
-    CustomUserCreationForm, CustomUserLoginForm,
-    CustomUserUpdateForm, CustomUserDeleteForm
+    CustomUserCreationForm,
+    CustomUserLoginForm,
+    CustomUserUpdateForm,
+    CustomUserDeleteForm,
 )
-from .models import CustomUser
+
 
 def user_register(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save(commit=False)
-            user.set_password(form.cleaned_data['password'])
+            user.set_password(form.cleaned_data["password"])
             user.save()
             messages.success(request, "Registration successful. Please log in.")
             return redirect("user_login")
@@ -77,4 +79,3 @@ def user_delete(request):
     else:
         form = CustomUserDeleteForm()
     return render(request, "accounts/delete.html", {"form": form})
-

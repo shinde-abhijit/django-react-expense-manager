@@ -4,7 +4,7 @@ from .viewsets import NotesViewSet
 from . import views
 
 router = DefaultRouter()
-router.register(r'notes', NotesViewSet, basename='notes')
+router.register(r"notes", NotesViewSet, basename="notes")
 
 urlpatterns = [
     path("note-list/", views.note_list, name="note_list"),
@@ -12,6 +12,5 @@ urlpatterns = [
     path("note-update/<int:pk>/", views.update_note, name="update_note"),
     path("note-delete/<int:pk>/", views.delete_note, name="delete_note"),
     path("note-details/<int:pk>/", views.note_details, name="note_details"),
-
-    path('api/', include(router.urls)),
+    path("api/", include(router.urls)),
 ]
