@@ -17,6 +17,7 @@ const Navbar = () => {
             {auth.token ? (
               <>
                 {/* Authenticated Navigation */}
+                <li><Link to={'/'}>Homepage</Link></li>
                 <li>
                   Contact
                   <ul className="dropdown">
@@ -35,7 +36,7 @@ const Navbar = () => {
                   Notes
                   <ul className="dropdown">
                     <li><Link to="/add-note">Add</Link></li>
-                    <li><Link to="/">List</Link></li>
+                    <li><Link to="/note-list">List</Link></li>
                   </ul>
                 </li>
                 <li>
