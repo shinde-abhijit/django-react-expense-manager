@@ -1,0 +1,85 @@
+
+header {
+    margin-bottom: 40px;
+    height: 5rem;
+    background-color: white;
+    color: #000;
+    display: grid;
+    place-items: center;
+    user-select: none;
+}
+
+.header-container {
+    width: 80%;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-container ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    height: 5rem;
+}
+
+
+.header-container ul li {
+    height: 5rem;
+    line-height: 5rem;
+    position: relative;
+    cursor: pointer;
+}
+
+
+.header-container ul li:hover {
+    color: red;
+}
+
+
+.header-container .dropdown {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    height: auto;
+    min-width: 10rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    padding: 1rem 0;
+    gap: 1rem;
+
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s linear;
+    top: 10rem;
+    cursor: pointer;
+}
+
+
+.header-container .dropdown li:hover{
+    background-color: #F0F0F0;
+    transition: all 0.3s linear;
+}
+
+.header-container ul li:hover > .dropdown {
+    visibility: visible;
+    opacity: 1;
+    transition: all 0.3s linear;
+    top: 5rem;
+    cursor: pointer;
+    z-index: 999;
+    color: #000;
+}
+
+
+.header-container .dropdown li {
+    height: 1.5rem;
+    line-height: 1.5rem;
+    width: 100%;
+    text-align:center;
+    border: 1px soild red;
+}
+

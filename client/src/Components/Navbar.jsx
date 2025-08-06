@@ -1,59 +1,76 @@
 import React, { useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import AuthContext from '../Context/AuthContext';
+import './css/Navbar.css';
 
 const Navbar = () => {
-  const { auth, setAuth } = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem('token'); // or sessionStorage
-    setAuth({ user: null, token: null });
-    navigate('/user-login');
-  };
+  const { auth, logout } = useContext(AuthContext);
 
   return (
-    <nav className="bg-white shadow-md px-4 py-3">
-      <div className="container mx-auto flex justify-between items-center">
-        <div className="text-xl font-bold text-gray-800">OrganizeMe</div>
-        <ul className="flex space-x-6 text-gray-700 font-medium">
-          {auth?.token ? (
-            <>
-              <li className="hover:text-blue-500 cursor-pointer">
-                <Link to={'/expense-list'}>Expense</Link>
-              </li>
-              <li className="hover:text-blue-500 cursor-pointer">
-                <Link to={'/add-expense'}>Add</Link>
-              </li>
-              <li className="hover:text-blue-500 cursor-pointer">
-                <Link to={'/add-contact'}>Add</Link>
-              </li>
-              <li className="hover:text-blue-500 cursor-pointer">
-                <Link to={'/contact-list'}>Contacts</Link>
-              </li>
-              <li><Link to={"/"} className="hover:text-blue-500">Notes</Link></li>
-              <li className="hover:text-blue-500 cursor-pointer">
-                <Link to={'/add-todo'}>Add</Link>
-              </li>
-              <li className="hover:text-blue-500 cursor-pointer">
-                <Link to={'/todo-list'}>Todos</Link>
-              </li>
-              <li className="hover:text-blue-500 cursor-pointer">
-                <Link to={'/user-profile'}>Profile</Link>
-              </li>
-              <li className="hover:text-blue-500 cursor-pointer" onClick={handleLogout}>
-                Logout
-              </li>
-            </>
-          ) : (
-            <>
-              <li><Link to={"/user-login"} className="hover:text-blue-500">Login</Link></li>
-              <li><Link to={"/user-register"} className="hover:text-blue-500">Register</Link></li>
-            </>
-          )}
-        </ul>
+    <header>
+      <div className="header-container">
+        <div>
+          <h1 className="text-xl capitalize font-semibold">OrganizeMe</h1>
+        </div>
+        <nav>
+          <ul>
+            {auth.token ? (
+              <>
+                {/* Authenticated Navigation */}
+                <li>
+                  Contact
+                  <ul className="dropdown">
+                    <li><Link to="/add-contact">Add</Link></li>
+                    <li><Link to="/contact-list">List</Link></li>
+                  </ul>
+                </li>
+                <li>
+                  Expense
+                  <ul className="dropdown">
+                    <li><Link to="/add-expense">Add</Link></li>
+                    <li><Link to="/expense-list">List</Link></li>
+                  </ul>
+                </li>
+                <li>
+                  Notes
+                  <ul className="dropdown">
+                    <li><Link to="/add-note">Add</Link></li>
+                    <li><Link to="/">List</Link></li>
+                  </ul>
+                </li>
+                <li>
+                  Todos
+                  <ul className="dropdown">
+                    <li><Link to="/add-todo">Add</Link></li>
+                    <li><Link to="/todo-list">List</Link></li>
+                  </ul>
+                </li>
+                <li>
+                  User
+                  <ul className="dropdown">
+                    <li><Link to="/user-profile">Profile</Link></li>
+                    <li><Link to="/user-update">Update</Link></li>
+                    <li><Link to="/user-delete">Delete</Link></li>
+                    <li><button onClick={logout} className="logout-btn">Logout</button></li>
+                  </ul>
+                </li>
+              </>
+            ) : (
+              <>
+                {/* Unauthenticated Navigation */}
+                <li>
+                  User
+                  <ul className="dropdown">
+                    <li><Link to="/user-register">Register</Link></li>
+                    <li><Link to="/user-login">Login</Link></li>
+                  </ul>
+                </li>
+              </>
+            )}
+          </ul>
+        </nav>
       </div>
-    </nav>
+    </header>
   );
 };
 

@@ -15,7 +15,7 @@ def add_contact(request):
             return redirect("contact_list")
     else:
         form = ContactForm()
-    return render(request, "contacts/contact_form.html", {"form": form})
+    return render(request, "contacts/add_contact.html", {"form": form})
 
 
 @login_required

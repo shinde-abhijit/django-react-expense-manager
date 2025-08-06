@@ -13,6 +13,12 @@
                             <li><a href="{% url 'contact_list' %}">List</a></li>
                         </ul>
                     </li>
+                    <li>Expense
+                        <ul class="dropdown">
+                            <li><a href="{% url 'add_expense' %}">Add</a></li>
+                            <li><a href="{% url 'expense_list' %}">List</a></li>
+                        </ul>
+                    </li>
                     <li>Notes
                         <ul class="dropdown">
                             <li><a href="{% url 'add_note' %}">Add</a></li>
@@ -48,6 +54,7 @@
 
 <style>
 header {
+    margin-bottom: 40px;
     height: 5rem;
     background-color: white;
     color: #000;
@@ -129,8 +136,5 @@ header {
     text-align:center;
     border: 1px soild red;
 }
-
-
-
 </style>
 
